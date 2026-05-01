@@ -42,3 +42,8 @@ L52-63 is commented out, so the conflict detection does not work:
 
 
 NOTE: resolution strategy, asked Jos for help
+
+- [ ] add github actions (also listening to new npm versions of the ODRL Validator)
+- [ ] add a text input field + button to validate and another field to represent the output of the validator
+- [ ] Add a selector with some example policies
+- [ ] Opt: add Arthurs LSP editor here?
