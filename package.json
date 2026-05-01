@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "copy-webpack-plugin": "^14.0.0",
+    "dotenv": "^17.4.2",
     "ts-loader": "^9.5.2",
     "typescript": "^6.0.2",
     "webpack": "^5.0.0",

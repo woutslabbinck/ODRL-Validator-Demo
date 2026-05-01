@@ -1,6 +1,6 @@
 import { ODRLValidator }  from "odrl-validator";
 
-import { Parser, Store } from "n3";
+import { Parser } from "n3";
 
 const policyInput = document.getElementById("policy") as HTMLTextAreaElement;
 const validateBtn = document.getElementById("validateBtn")!;

@@ -1,6 +1,12 @@
 const path = require('path');
 const webpack = require('webpack');
 const CopyPlugin = require("copy-webpack-plugin");
+require("dotenv").config();
+
+const isProd = process.env.NODE_ENV === "production";
+const publicPath = isProd
+  ? "/ODRL-Validator-Demo/" // GitHub Pages repo path
+  : process.env.PUBLIC_PATH || "/";
 
 module.exports = {
   target: "web",
@@ -12,6 +18,7 @@ module.exports = {
   output: {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist"),
+    publicPath,
     clean: true
   },
 
@@ -72,6 +79,9 @@ module.exports = {
       patterns: [
         { from: "src/index.html", to: "index.html" } // copy HTML into dist
       ],
+    }),
+    new webpack.DefinePlugin({
+      "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV || "production"),
     })
   ]
 };
