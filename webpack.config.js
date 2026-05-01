@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   target: "web",
@@ -50,7 +51,7 @@ module.exports = {
     }
   },
   //TODO: remove when eyeling is fixed
-    ignoreWarnings: [
+  ignoreWarnings: [
     (warning) =>
       /Critical dependency: the request of a dependency is an expression/.test(
         warning.message || ""
@@ -59,12 +60,18 @@ module.exports = {
         (warning.module && warning.module.resource) || ""
       ),
   ],
-    plugins: [
+  plugins: [
+    // TODO: remove after eyeling is fixed
     new webpack.NormalModuleReplacementPlugin(
       /eyeling/, // Regex matching the module you want to replace
       resource => {
         resource.request = path.resolve(__dirname, 'eyeling-patch.js');
       }
-    )
+    ),
+    new CopyPlugin({
+      patterns: [
+        { from: "src/index.html", to: "index.html" } // copy HTML into dist
+      ],
+    })
   ]
 };
