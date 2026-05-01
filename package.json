@@ -6,6 +6,7 @@
     "build": "webpack --mode production"
   },
   "dependencies": {
+    "n3": "^2.0.3",
     "odrl-validator": "github:elenamolino/odrl-validator#feat/browserify"
   },
   "devDependencies": {

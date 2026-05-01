@@ -1,14 +1,28 @@
-import * as OdrlValidator from "odrl-validator";
+import { ODRLValidator }  from "odrl-validator";
 
-const out = document.getElementById("out")!;
+import { Parser, Store } from "n3";
 
-out.textContent =
-  "Exports:\n" + Object.keys(OdrlValidator).sort().join("\n");
+const policyInput = document.getElementById("policy") as HTMLTextAreaElement;
+const validateBtn = document.getElementById("validateBtn")!;
+const resultEl = document.getElementById("result")!;
 
-const validator = new OdrlValidator.ODRLValidator();
-validator.validate([]).then(result => console.log(result))
+validateBtn.addEventListener("click", async () => {
+  const policyText = policyInput.value.trim();
+  if (!policyText) {
+    resultEl.textContent = "Please enter an ODRL policy.";
+    return;
+  }
 
-// Once you know the API name, plug it in here.
-// Example shape (you adapt):
-// const report = await (OdrlValidator as any).validatePolicy(turtleString);
-// console.log(report);
+  try {
+    const parser = new Parser();
+    const quads = parser.parse(policyText);
+
+    const validator = new ODRLValidator();
+    const evaluation = await validator.validate(quads);
+
+    resultEl.textContent = JSON.stringify(evaluation, null, 2);
+  } catch (err) {
+    resultEl.textContent = "Error parsing or validating policy:\n" + err;
+    console.error(err);
+  }
+});

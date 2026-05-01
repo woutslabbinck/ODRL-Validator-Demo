@@ -1,15 +1,22 @@
-<!doctype html>
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>odrl-validator (Webpack demo)</title>
+  <meta charset="UTF-8">
+  <title>ODRL Validator Demo</title>
 </head>
-
 <body>
-  <pre id="out">Loading…</pre>
+  <h1>ODRL Validator Demo</h1>
+
+  <label for="policy">Enter ODRL Policy (Turtle/RDF):</label><br>
+  <textarea id="policy" rows="10" cols="50" placeholder="Enter your ODRL RDF/Turtle here"></textarea><br>
+
+  <button id="validateBtn">Validate Policy</button>
+
+  <h2>Result:</h2>
+  <pre id="result"></pre>
 
   <script src="/ODRL-Validator-Demo/bundle.js"></script>
+  <!-- <script src="/bundle.js"></script> -->
 </body>
 
 </html>
