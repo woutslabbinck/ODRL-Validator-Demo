@@ -39,7 +39,15 @@ module.exports = {
 
   resolve: {
     extensions: [".ts", ".js"],
+    alias: {
 
+    "N3-utility": path.resolve(
+      __dirname,
+      "node_modules/N3-utility/dist/esm/index.browser.js"
+    ),
+    "eyereasoner": false
+
+    },
     // 1) Prefer browser entrypoints when present (default on "web" is already this)
     mainFields: ["browser", "module", "main"],
 
@@ -57,24 +65,18 @@ module.exports = {
       stream: false
     }
   },
-  //TODO: remove when eyeling is fixed
-  ignoreWarnings: [
-    (warning) =>
-      /Critical dependency: the request of a dependency is an expression/.test(
-        warning.message || ""
-      ) &&
-      /eyeling\.browser\.js/.test(
-        (warning.module && warning.module.resource) || ""
-      ),
-  ],
-  plugins: [
-    // TODO: remove after eyeling is fixed
-    new webpack.NormalModuleReplacementPlugin(
-      /eyeling/, // Regex matching the module you want to replace
-      resource => {
-        resource.request = path.resolve(__dirname, 'eyeling-patch.js');
-      }
+
+ignoreWarnings: [
+  (warning) =>
+    /Critical dependency: the request of a dependency is an expression/.test(
+      warning.message || ""
+    ) &&
+    /eyeling\.browser\.js/.test(
+      (warning.module && warning.module.resource) || ""
     ),
+],
+
+  plugins: [
     new CopyPlugin({
       patterns: [
         { from: "src/index.html", to: "index.html" } // copy HTML into dist
