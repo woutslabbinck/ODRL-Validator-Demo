@@ -1,20 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>ODRL Validator Demo</title>
+  <style>
+    body { font-family: Arial, sans-serif; }
+
+    .summary { margin-top: 1em; font-weight: bold; }
+
+    .count { margin-right: 1em; }
+    .error { color: red; }
+    .warning { color: goldenrod; }
+    .conflict { color: steelblue; }
+
+    .item {
+      border: 1px solid #ddd;
+      padding: 8px;
+      margin: 6px 0;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .item.error { border-left: 5px solid red; }
+    .item.warning { border-left: 5px solid goldenrod; }
+    .item.conflict { border-left: 5px solid steelblue; }
+
+    .details {
+      display: none;
+      margin-top: 5px;
+      font-size: 0.9em;
+      color: #555;
+    }
+
+    .item.open .details { display: block; }
+  </style>
 </head>
+
 <body>
   <h1>ODRL Validator Demo</h1>
 
-  <label for="policy">Enter ODRL Policy (Turtle/RDF):</label><br>
-  <textarea id="policy" rows="10" cols="50" placeholder="Enter your ODRL RDF/Turtle here"></textarea><br>
+  <label for="policy">Enter ODRL Policy (Turtle/RDF):</label><br />
+
+  <label for="examples">Examples:</label><br />
+  <select id="examples">
+    <option value="">-- Select a test policy --</option>
+  </select><br /><br />
+
+  <textarea id="policy" rows="10" cols="50"></textarea><br />
 
   <button id="validateBtn">Validate Policy</button>
 
   <h2>Result:</h2>
-  <pre id="result"></pre>
+
+  <div id="summary" class="summary"></div>
+
+  <div id="validationResults"></div>
+
+  <div id="conflictsSection">
+    <h3>Conflicts</h3>
+    <div id="conflicts"></div>
+  </div>
+
   <script src="bundle.js"></script>
 </body>
-
 </html>
