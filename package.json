@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "n3": "^2.0.3",
-    "odrl-validator": "github:elenamolino/odrl-validator#feat/browserify"
+    "odrl-validator": "github:elenamolino/odrl-validator"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^14.0.0",

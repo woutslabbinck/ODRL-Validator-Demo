@@ -41,9 +41,9 @@ module.exports = {
     extensions: [".ts", ".js"],
     alias: {
 
-    "N3-utility": path.resolve(
+    "n3-utility": path.resolve(
       __dirname,
-      "node_modules/N3-utility/dist/esm/index.browser.js"
+      "node_modules/n3-utility/dist/esm/index.browser.js"
     ),
     "eyereasoner": false
 
