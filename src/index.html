@@ -1,17 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>ODRL Validator Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
   <style>
-    body { font-family: Arial, sans-serif; }
+    html,
+    body {
+      height: 100%;
+    }
 
-    .summary { margin-top: 1em; font-weight: bold; }
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+    }
 
-    .count { margin-right: 1em; }
-    .error { color: red; }
-    .warning { color: goldenrod; }
-    .conflict { color: steelblue; }
+    .summary {
+      margin-top: 1em;
+      font-weight: bold;
+    }
+
+    .container {
+      flex: 1;
+    }
+
+    .count {
+      margin-right: 1em;
+    }
+
+    .error {
+      color: red;
+    }
+
+    .warning {
+      color: goldenrod;
+    }
+
+    .conflict {
+      color: steelblue;
+    }
+
+    label {
+      white-space: nowrap;
+    }
+
+    .dropdown-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      /* Space between dropdown and button */
+    }
 
     .item {
       border: 1px solid #ddd;
@@ -21,9 +62,17 @@
       cursor: pointer;
     }
 
-    .item.error { border-left: 5px solid red; }
-    .item.warning { border-left: 5px solid goldenrod; }
-    .item.conflict { border-left: 5px solid steelblue; }
+    .item.error {
+      border-left: 5px solid red;
+    }
+
+    .item.warning {
+      border-left: 5px solid goldenrod;
+    }
+
+    .item.conflict {
+      border-left: 5px solid steelblue;
+    }
 
     .details {
       display: none;
@@ -32,35 +81,86 @@
       color: #555;
     }
 
-    .item.open .details { display: block; }
+    .item.open .details {
+      display: block;
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 10px
+    }
+
+    footer {
+      margin-top: 2rem;
+      padding: 1rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666;
+      border-top: 1px solid #ddd;
+    }
   </style>
 </head>
 
 <body>
-  <h1>ODRL Validator Demo</h1>
+  <div class="container">
+    <h1 class="title">ODRL Validator Demo</h1>
+    <p>
+      This demo validates ODRL policies, ensuring that they conform to the
+      <a href="https://www.w3.org/TR/odrl-model/" target="_blank" rel="noopener noreferrer">ODRL Information Model 2.2</a>. 
+        The policy is first
+      <a href="https://www.w3.org/2016/poe/wiki/Validation" target="_blank" rel="noopener noreferrer">normalized</a>, then checked against a set of
+      <a href="https://www.w3.org/TR/shacl/" target="_blank" rel="noopener noreferrer">SHACL</a>
+      constraints. If the policy satisfies these structural checks, a final reasoning step looks for conflicts in the
+      policy.
+    </p>
+    <p> Validation results are grouped into three categories. After validating a policy, you can expand each reported
+      finding to view additional details.</p>
+    <ul>
+      <li><strong>Violation:</strong> The policy does not conform to the ODRL Information Model.</li>
+      <li><strong>Warning:</strong> The policy can still be interpreted, but it relies on constructs that are incomplete
+        or omitted and must be inferred.</li>
+      <li><strong>Conflict:</strong> The policy is structurally valid, but contains rules (or other constructs) that
+        contradict one another.
+      </li>
+    </ul>
 
-  <label for="policy">Enter ODRL Policy (Turtle/RDF):</label><br />
+    <div class="dropdown-container">
+      <label for="examples">Examples:</label>
+      <select id="examples">
+        <option value="">-- Select a test policy --</option>
+      </select>
+    </div>
 
-  <label for="examples">Examples:</label><br />
-  <select id="examples">
-    <option value="">-- Select a test policy --</option>
-  </select><br /><br />
+    <h3 for="policy">ODRL Policy</h3>
+    <textarea id="policy" rows="10" cols="50"></textarea><br />
 
-  <textarea id="policy" rows="10" cols="50"></textarea><br />
+    <button id="validateBtn">Validate Policy</button>
 
-  <button id="validateBtn">Validate Policy</button>
+    <h2>Result:</h2>
 
-  <h2>Result:</h2>
+    <div id="summary" class="summary"></div>
 
-  <div id="summary" class="summary"></div>
+    <div id="validationResults"></div>
 
-  <div id="validationResults"></div>
+    <div id="conflictsSection" style="display: none;">
+      <h3>Conflicts</h3>
+      <div id="conflicts"></div>
+    </div>
 
-  <div id="conflictsSection">
-    <h3>Conflicts</h3>
-    <div id="conflicts"></div>
   </div>
-
+  <footer>
+    <p>All the calculations are performed in the browser, facilitated through the <a
+        href="https://github.com/rdf-ext/shacl-engine/" class="no-underline">shacl-engine</a> and the <a
+        href="https://github.com/eyereasoner/eyeling" class="no-underline">eyeling</a> reasoning engine.</p>
+    <small> ©2026–now <a href="http://www.ugent.be/" class="no-underline">Ghent University</a> – <a
+        href="http://www.imec.be/" class="no-underline">imec</a>, Belgium. </br>
+      Source code of the <a href="https://github.com/elenamolino/odrl-validator">ODRL Validator</a> and this <a
+        href="https://github.com/woutslabbinck/ODRL-Evaluator-Demo" class="no-underline">Web client
+        code</a>.</small>
+  </footer>
   <script src="bundle.js"></script>
 </body>
+
 </html>

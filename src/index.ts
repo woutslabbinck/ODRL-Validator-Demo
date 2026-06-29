@@ -12,7 +12,6 @@ const examplesSelect = document.getElementById("examples") as HTMLSelectElement;
 
 policyInput.scrollIntoView({ behavior: "smooth" });
 
-
 function initExamples() {
   examples.forEach((ex, i) => {
     const opt = document.createElement("option");
@@ -77,16 +76,16 @@ function resetUI() {
   summaryEl.innerHTML = "";
   validationEl.innerHTML = "";
   conflictsEl.innerHTML = "";
-  conflictsSection.style.display = "block";
+  conflictsSection.style.display = "none";
 }
 
 function renderSummary(evaluation: any) {
   const warnings = evaluation.validationResults.filter(
-    (r: any) => r.resultSeverity.includes("Warning")
+    (r: any) =>  r.severity.includes("Warning")
   ).length;
 
   const errors = evaluation.validationResults.filter(
-    (r: any) => r.resultSeverity.includes("Violation")
+    (r: any) => r.severity.includes("Violation")
   ).length;
 
   const conflicts = evaluation.conflicts.length;
@@ -108,7 +107,7 @@ function renderSummary(evaluation: any) {
 
 function renderValidation(evaluation: any) {
   evaluation.validationResults.forEach((r: any) => {
-    const type = r.resultSeverity.includes("Violation")
+    const type = r.severity.includes("Violation")
       ? "error"
       : "warning";
 
@@ -129,11 +128,13 @@ function renderValidation(evaluation: any) {
 }
 
 function renderConflicts(evaluation: any) {
+  conflictsSection.style.display = "block";
+
   // Skip conflicts if invalid (your rule)
   if (!evaluation.valid) {
     conflictsSection.style.display = "none";
     return;
-  }
+  } 
 
   evaluation.conflicts.forEach((c: any) => {
     const el = createItem(

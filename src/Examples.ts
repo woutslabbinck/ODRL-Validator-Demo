@@ -20,10 +20,6 @@ export const examples: Example[] = [
     url: BASE + "test-02-valid-policy-permission-prohibition.ttl"
   },
   {
-    label: "❌ Conflict (permission vs prohibition)",
-    url: BASE + "test-03-invalid-policy-conflicts-perm-prohibition.ttl"
-  },
-  {
     label: "✅ No conflict (permission vs prohibition)",
     url: BASE + "test-04-valid-policy-no-conflicts-perm-prohibition.ttl"
   },
@@ -34,5 +30,9 @@ export const examples: Example[] = [
   {
     label: "⚠️ Inconsistent (with duty conflict)",
     url: BASE + "test-06-inconsistent-policy-perm-prohibition-duty.ttl"
-  }
+  },
+  {
+    label: "⚠️ Inconsistent (impossible constraints)",
+    url: BASE + "test-07-inconsistent-constraint.ttl"
+  },
 ];
