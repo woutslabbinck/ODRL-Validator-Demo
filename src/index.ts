@@ -91,7 +91,7 @@ function renderSummary(evaluation: any) {
   const conflicts = evaluation.conflicts.length;
 
   summaryEl.innerHTML = `
-    <span class="count error">🔴 Errors: ${errors}</span>
+    <span class="count error">🔴 Violations: ${errors}</span>
     <span class="count warning">🟡 Warnings: ${warnings}</span>
     <span class="count conflict">🔵 Conflicts: ${conflicts}</span>
   `;
